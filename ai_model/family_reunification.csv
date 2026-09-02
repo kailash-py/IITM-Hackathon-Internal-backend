@@ -1,0 +1,9 @@
+record_id,person_name,age,gender,phone_number,rescued_from,current_camp,status,kin_info,timestamp
+REC-101,Aarav Nair,34,Male,+91 98451 23410,Aluva Bridge Underpass,Aluva Town Hall Relief Camp,Reunited,Preeti Nair (Wife),2026-08-28 14:30
+REC-102,Ananya Menon,12,Female,+91 94471 88920,Munnar Hillside Colony,Relief Camp 04 - Munnar Base,In Relief Camp,Looking for Father (Sanjay Menon),2026-08-29 09:15
+REC-103,Kishore Varma,68,Male,+91 98950 11234,Periyar Riverbank Ward 5,St. Mary's HSS Camp - Kalady,In Relief Camp,Looking for Son (Rahul Varma),2026-08-29 10:45
+REC-104,Fatima Begum,42,Female,+91 97460 55432,Silchar Lowlands,Silchar Indoor Stadium Shelter,Reunited,Tariq Begum (Brother),2026-08-28 18:20
+REC-105,Devendra Joshi,28,Male,+91 98112 33445,Joshimath Ward 3,Joshimath GMVN Base Camp,In Relief Camp,Pooja Joshi (Wife),2026-08-29 11:30
+REC-106,Meenakshi Pillai,8,Female,+91 94950 77889,Wayanad Chooralmala,Kalpetta Community Hall Camp,Reunited,Radha Pillai (Mother),2026-08-29 08:00
+REC-107,Ravi Kumar,50,Male,+91 98470 99881,Vypeen Coastal Ward,Govt. Boys HSS Camp - Vypeen,In Relief Camp,Looking for Family,2026-08-29 12:10
+REC-108,Sunita Devi,38,Female,+91 98350 44556,Patna Ganga Diara,Gandhi Maidan Relief Hub,Reunited,Manoj Kumar (Husband),2026-08-28 16:50

@@ -1,0 +1,6 @@
+incident_id,type,severity,location_name,latitude,longitude,description,data_source_row,rainfall_mm,water_level_m,river_discharge,soil_type
+SIH-90,Flash Flood,CRITICAL,Aluva Bridge Underpass,10.1077,76.3546,Water Level: 8.7m | Rainfall: 138mm | River Discharge: 125 m3/s. Persons stranded.,Dataset Row #3832,138.266990888315,8.74752067100269,124.77869374752038,Sandy
+SIH-91,Flash Flood,CRITICAL,Periyar River Bank - Kalady,10.1683,76.441,Water Level: 8.8m | Rainfall: 162mm | River Discharge: 3231 m3/s. Persons stranded.,Dataset Row #8196,161.9739890585877,8.831685396886423,3231.1612732058898,Sandy
+SIH-92,Flash Flood,CRITICAL,Chalakudy River Crossing,10.3004,76.331,Water Level: 10.0m | Rainfall: 59mm | River Discharge: 3705 m3/s. Persons stranded.,Dataset Row #5390,58.66710328673671,9.987424104679784,3705.357748890862,Clay
+SIH-93,Landslide Debris,CRITICAL,NH-66 Munnar Ghat Km 34,10.0889,77.0595,Precipitation: 124mm | Soil Moisture: 87% | Elevation: 371m. Road blocked by debris.,Dataset Row #191,124.0,0,0,N/A
+SIH-94,Landslide Debris,HIGH,Wayanad Chooralmala Slope,11.512,76.042,Precipitation: 200mm | Soil Moisture: 74% | Elevation: 590m. Road blocked by debris.,Dataset Row #4746,200.0,0,0,N/A

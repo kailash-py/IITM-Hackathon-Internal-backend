@@ -1,0 +1,6 @@
+team_id,name,status,base_location,specialization,personnel_count,equipment
+T01,NDRF 9th Bn (Patna),Active,Aluva Forward Operating Base,Flood Rescue & Evacuation,45,"Inflatable Boats, Cutters, Life Jackets"
+T02,SDRF Kerala Unit-2,Available,Ernakulam District Collectorate,Landslide Debris Clearance,30,"Earth Movers, Rescue Dogs, Ropes"
+T03,NDRF 4th Bn (Arakkonam),Available,Kochi Naval Base Camp,Urban Search & Rescue,50,"Hydraulic Cutters, Thermal Cameras"
+T04,IAF 7 Wing (Cochin),Available,"INS Garuda Air Station, Kochi",Aerial Rescue & Airdrop,12,"Mi-17 Helicopter, Winch Harness"
+T05,Indian Navy Rescue Dive,Available,"Southern Naval Command, Kochi",Deep Water Rescue,20,"Diving Suits, Gemini Boats"

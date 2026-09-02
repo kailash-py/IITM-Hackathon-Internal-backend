@@ -1,0 +1,7 @@
+camp_id,name,capacity,occupied,food_kits,water_liters,medical_kits,officer_in_charge,district,latitude,longitude,facility_type,opened_date
+C01,Aluva Town Hall Relief Camp,1200,437,860,4200,145,Suresh Kumar I.A.S,Aluva,10.1077,76.3546,Government Building,2026-08-25
+C02,St. Mary's HSS Camp - Kalady,2000,1134,1790,9200,312,Dr. Priya Nair (CMO),Kalady,10.1683,76.441,School,2026-08-24
+C03,Govt. Boys HSS Camp - Vypeen,1500,689,940,5100,205,K.R. Menon (Tahsildar),Vypeen,10.1764,76.2144,School,2026-08-25
+C04,Kalpetta Community Hall,1400,312,720,3800,98,Rajan P.K. (Block Dev. Officer),Wayanad,11.6087,76.0748,Community Hall,2026-08-26
+C05,Idukki Panchayat Camp,900,201,480,2100,67,Mini Thomas (Panchayat Secy),Idukki,9.8499,76.9712,Panchayat Building,2026-08-26
+C06,Kozhikode Beach Stadium Camp,2500,1620,2100,11000,420,Collector Office,Kozhikode,11.2588,75.7804,Stadium,2026-08-23

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hazard Red Zone — Dashboard Data Guide</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+    body {
+      font-family: "Segoe UI", Calibri, Arial, sans-serif;
+      color: #1c1814;
+      line-height: 1.45;
+      font-size: 11pt;
+    }
+    h1 { font-size: 22pt; margin: 0 0 4px; }
+    h2 { font-size: 14pt; margin: 22px 0 8px; border-bottom: 1px solid #c9bba6; padding-bottom: 4px; }
+    h3 { font-size: 12pt; margin: 16px 0 6px; }
+    .kicker { color: #8b2e2e; letter-spacing: 0.12em; text-transform: uppercase; font-size: 9pt; }
+    .lead { color: #5c5348; margin: 0 0 16px; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 10pt; }
+    th, td { border: 1px solid #ddd4c6; padding: 6px 8px; vertical-align: top; text-align: left; }
+    th { background: #efe8db; }
+    .tag { display: inline-block; font-size: 8.5pt; padding: 1px 7px; border-radius: 999px; background: #efe8db; }
+    .live { background: #e4eee8; color: #2f4a40; }
+    .real { background: #e7eef2; color: #3d5360; }
+    .demo { background: #f3e7c8; color: #7a5b16; }
+    .comp { background: #f3e4df; color: #8b2e2e; }
+    .hard { background: #eee; color: #444; }
+    ul { margin: 6px 0 12px 18px; }
+    .foot { margin-top: 28px; font-size: 9pt; color: #6d6458; }
+  </style>
+</head>
+<body>
+  <p class="kicker">SIH 26191 · The Invincible Trident · IIT Madras BS</p>
+  <h1>Hazard Red Zone</h1>
+  <p class="lead">Dashboard pe jo dikhta hai, woh data kahan se aata hai — live, file, demo CSV, ya app ne calculate kiya. Friend / teammate share guide.</p>
+
+  <h2>1. Labels (pehle yeh yaad rakho)</h2>
+  <table>
+    <tr><th>Label</th><th>Matlab</th></tr>
+    <tr><td><span class="tag live">LIVE</span></td><td>Abhi internet se aa raha hai (Open-Meteo, Twilio, browser GPS, OSM tiles).</td></tr>
+    <tr><td><span class="tag real">REAL FILE</span></td><td>Asli public dataset repo mein hai (Kaggle flood/landslide). Roz naya NDMA feed nahi.</td></tr>
+    <tr><td><span class="tag demo">DEMO CSV</span></td><td>Humne Kerala-style seed likha. Official live district dashboard nahi.</td></tr>
+    <tr><td><span class="tag comp">COMPUTED</span></td><td>App / Random Forest / tumhari click se bana (score, count, order id).</td></tr>
+    <tr><td><span class="tag hard">HARDCODED UI</span></td><td>Text/layout code mein likha. Database nahi.</td></tr>
+  </table>
+  <p>UI data <b>GET /api/...</b> se aata hai. Backend <b>ai_model/*.csv</b>, Python models, aur Open-Meteo padhta hai.</p>
+
+  <h2>2. Login</h2>
+  <table>
+    <tr><th>Jo dikhta hai</th><th>Kahan se</th><th>Type</th></tr>
+    <tr><td>Collector / Field / Resident cards</td><td>Login.jsx text</td><td><span class="tag hard">HARDCODED UI</span></td></tr>
+    <tr><td>Session name, office</td><td>POST /api/login — fixed desks, no password</td><td><span class="tag hard">HARDCODED</span></td></tr>
+  </table>
+
+  <h2>3. Overview — upar ke 5 numbers</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Habitations at risk</td><td>Habitation list length (6 sites)</td><td><span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>Critical / Immediate</td><td>Jahan riskLevel = CRITICAL</td><td><span class="tag comp">COMPUTED</span> (model)</td></tr>
+    <tr><td>Still need relocation</td><td>Status PENDING / VERIFIED count</td><td><span class="tag comp">COMPUTED</span> + verify/approve</td></tr>
+    <tr><td>Safe-site capacity</td><td>Camps ke capacity ka sum</td><td><span class="tag demo">DEMO CSV</span> relief_camps_kerala.csv</td></tr>
+    <tr><td>Currently sheltered</td><td>Camps ke occupied ka sum</td><td><span class="tag demo">DEMO CSV</span></td></tr>
+    <tr><td>Active / available teams</td><td>Team status</td><td><span class="tag demo">DEMO CSV</span> + dispatch click</td></tr>
+    <tr><td>Families in camps / reunited</td><td>Reunification records</td><td><span class="tag demo">DEMO CSV</span> + jo tum register karo</td></tr>
+  </table>
+  <p>Hint “AI-ranked from live telemetry” tab sach hai jab Overview pe <b>LIVE</b> on ho.</p>
+
+  <h2>4. Overview — pipeline aur do tracks</h2>
+  <p>Saara copy PPT wala story hai. <span class="tag hard">HARDCODED UI</span> — koi API table nahi.</p>
+
+  <h2>5. Overview — Kerala map</h2>
+  <table>
+    <tr><th>Layer</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Background (roads, nadi, towns)</td><td>OpenStreetMap tiles</td><td><span class="tag live">LIVE</span> (API key nahi)</td></tr>
+    <tr><td>Red risk dots + circles</td><td>6 habitations: names/coords in real_data_sampler.py; colour = model score</td><td>Real Kerala lat/lng + <span class="tag comp">COMPUTED</span> risk</td></tr>
+    <tr><td>Green camps</td><td>relief_camps_kerala.csv lat/lng</td><td><span class="tag demo">DEMO CSV</span> (coords Kerala ke)</td></tr>
+    <tr><td>Purple incidents</td><td>active_incidents.csv</td><td><span class="tag demo">DEMO CSV</span> (rain numbers Kaggle row se)</td></tr>
+    <tr><td>Orange SOS</td><td>Citizen SOS form</td><td>User action; pin = browser GPS <b>ya</b> Aluva 10.1077, 76.3546</td></tr>
+  </table>
+  <p>Map model ko <b>nahi</b> jaata. Sirf dikhana hai.</p>
+
+  <h2>6. Overview — weather</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>LIVE button</td><td>Har habitation ke lat/lng pe Open-Meteo → flood/landslide features → Random Forest rescore</td><td><span class="tag live">LIVE</span></td></tr>
+    <tr><td>Rain, temp, humidity, soil moisture</td><td>Open-Meteo forecast (free, no key)</td><td><span class="tag live">LIVE</span></td></tr>
+    <tr><td>River discharge</td><td>Open-Meteo Flood API, jahan cell mile</td><td><span class="tag live">LIVE</span> (warna estimate)</td></tr>
+    <tr><td>Water level (m)</td><td>CWC gauge nahi; rain + discharge se formula</td><td><span class="tag comp">COMPUTED / estimated</span></td></tr>
+    <tr><td>NORMAL / SEVERE MONSOON / CYCLONE</td><td>Code: 35 / 310 / 440 mm etc.</td><td><span class="tag hard">HARDCODED demo</span></td></tr>
+  </table>
+
+  <h2>7. Overview — incidents + model evidence</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>#SIH-090 Flash Flood, location…</td><td>active_incidents.csv</td><td><span class="tag demo">DEMO CSV</span></td></tr>
+    <tr><td>Team assigned</td><td>CSV seed + Dispatch click</td><td><span class="tag demo">DEMO</span> + <span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>SOS lines</td><td>Memory / backend/data/state.json</td><td>User LIVE action</td></tr>
+    <tr><td>Flood rows ~10000, positives</td><td>flood_risk_dataset_india.csv count</td><td><span class="tag real">REAL FILE</span></td></tr>
+    <tr><td>Landslide rows ~5000, high-risk</td><td>regenerated_landslide_risk_dataset.csv</td><td><span class="tag real">REAL FILE</span></td></tr>
+  </table>
+
+  <h2>8. Relocation plan</h2>
+  <table>
+    <tr><th>Column</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Name (Munnar, Aluva…)</td><td>real_data_sampler.py list</td><td>Hardcoded names, <b>real</b> coords</td></tr>
+    <tr><td>Population</td><td>Same list (450, 1200…)</td><td><span class="tag demo">DEMO</span></td></tr>
+    <tr><td>Hazard type</td><td>Same list</td><td><span class="tag demo">DEMO</span></td></tr>
+    <tr><td>Flood / landslide / risk score</td><td>Random Forest .pkl</td><td><span class="tag comp">COMPUTED</span> — inputs LIVE Open-Meteo ya scenario ya pehle Kaggle row</td></tr>
+    <tr><td>Priority Immediate / Short / Medium</td><td>Score rule (≥75 Immediate)</td><td><span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>Matched safe site, km, capacity</td><td>Sampler pairing</td><td><span class="tag demo">DEMO</span> (live matcher nahi)</td></tr>
+    <tr><td>Capacity OK</td><td>cap ≥ population</td><td><span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>PENDING / VERIFIED / APPROVED</td><td>Memory + state.json</td><td><span class="tag comp">COMPUTED</span> (clicks)</td></tr>
+    <tr><td>ORD-2026-xxxx</td><td>Approve button</td><td><span class="tag comp">COMPUTED</span></td></tr>
+  </table>
+  <p>Verify GPS: pehle <b>live browser GPS try</b>, fail ho to habitation lat/lng. Photo: sirf <b>filename</b>, image upload nahi.</p>
+
+  <h2>9. Field notes</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Task list</td><td>Backend seed — top habitations</td><td><span class="tag comp">COMPUTED</span> (wahi 6 sites)</td></tr>
+    <tr><td>Checklist ticks</td><td>Officer click</td><td>Session LIVE</td></tr>
+    <tr><td>Officer name</td><td>Default “SDRF…”</td><td><span class="tag hard">HARDCODED</span> default</td></tr>
+    <tr><td>Photo</td><td>File ka naam only</td><td>Dummy upload</td></tr>
+    <tr><td>GPS in API</td><td>Habitation centroid</td><td>Is screen pe <b>live GPS nahi</b></td></tr>
+    <tr><td>Offline queue</td><td>browser localStorage</td><td>Device pe</td></tr>
+  </table>
+
+  <h2>10. Alerts</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Habitation / shelter dropdown</td><td>Habitations + matched site</td><td><span class="tag demo">DEMO list</span></td></tr>
+    <tr><td>Message</td><td>Default English, editable</td><td><span class="tag hard">HARDCODED</span> default</td></tr>
+    <tr><td>SMS</td><td>Twilio if backend/.env set</td><td><span class="tag live">LIVE</span> or simulator</td></tr>
+    <tr><td>IVR</td><td>Browser speechSynthesis</td><td>Voice LIVE, carrier nahi</td></tr>
+    <tr><td>App / siren</td><td>Log only</td><td><span class="tag demo">DEMO</span></td></tr>
+    <tr><td>Alert log</td><td>Memory + state.json</td><td>Jo tumne bheja</td></tr>
+  </table>
+
+  <h2>11. Rescue dispatch</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Incidents</td><td>active_incidents.csv + SOS</td><td><span class="tag demo">DEMO</span> + user SOS</td></tr>
+    <tr><td>Rain/water in description</td><td>CSV (Kaggle row copy)</td><td><span class="tag real">REAL FILE</span> numbers, live gauge nahi</td></tr>
+    <tr><td>NDRF / SDRF teams</td><td>rescue_teams_india.csv</td><td><span class="tag demo">DEMO CSV</span></td></tr>
+    <tr><td>Dispatch Active</td><td>Button click</td><td><span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>A* path, safety, ETA</td><td>ai_model/astar.py 20×20 grid</td><td><span class="tag comp">COMPUTED</span> — OSM roads nahi</td></tr>
+  </table>
+
+  <h2>12. Families + Resident desk</h2>
+  <table>
+    <tr><th>UI</th><th>Source</th><th>Type</th></tr>
+    <tr><td>Aarav, Ananya…</td><td>family_reunification.csv</td><td><span class="tag demo">DEMO</span> people</td></tr>
+    <tr><td>Counts</td><td>Unhi records + naye</td><td><span class="tag comp">COMPUTED</span></td></tr>
+    <tr><td>Register / reunite</td><td>Form → memory / state.json</td><td>Session LIVE</td></tr>
+    <tr><td>Camps on citizen page</td><td>relief_camps_kerala.csv</td><td><span class="tag demo">DEMO CSV</span></td></tr>
+    <tr><td>SOS defaults</td><td>“Aluva Bridge Underpass”, 2 people</td><td><span class="tag hard">HARDCODED</span></td></tr>
+    <tr><td>SOS map pin</td><td>Browser GPS or Aluva fallback</td><td>Mix</td></tr>
+    <tr><td>Official alerts</td><td>Alert log</td><td>Jo authority ne bheja</td></tr>
+  </table>
+
+  <h2>13. Model — train vs predict</h2>
+  <h3>Train (ek baar, historical)</h3>
+  <ul>
+    <li>flood_risk_dataset_india.csv (~10,000 rows) → flood_prediction_rf_model.pkl</li>
+    <li>regenerated_landslide_risk_dataset.csv (~5,000 rows) → landslide_prediction_rf_model.pkl</li>
+  </ul>
+  <h3>Predict (ab, har score)</h3>
+  <ul>
+    <li><b>Static:</b> lat/lng, soil, land cover, population (sampler + Kaggle row)</li>
+    <li><b>Dynamic:</b> LIVE Open-Meteo, ya NORMAL/MONSOON/CYCLONE buttons</li>
+  </ul>
+
+  <h2>14. Judges / friend ke liye 4 line</h2>
+  <ol>
+    <li>Map background <b>live OSM</b>; pins hamari files + model.</li>
+    <li>Risk score <b>asli trained Random Forest</b>; mausam <b>LIVE Open-Meteo</b> (ya demo cyclone).</li>
+    <li>Camps, teams, families, incidents <b>demo CSV</b> — Kerala coords, live NDMA nahi.</li>
+    <li>SOS, approve, dispatch, alerts <b>is session ke real actions</b> (SMS Twilio optional).</li>
+  </ol>
+
+  <p class="foot">
+    Project: Hazard Red Zone Alert &amp; Rescue Coordination System · Problem SIH26191<br />
+    File generated for sharing — not an official NDMA dataset document.
+  </p>
+</body>
+</html>
