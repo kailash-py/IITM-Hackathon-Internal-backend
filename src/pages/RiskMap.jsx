@@ -27,8 +27,8 @@ export default function RiskMap({ data, go, toast, emergency, toggleEmergency, s
         <div className="mapwrap" style={{ height: 540 }}>
           <MapContainer center={CENTER} zoom={10} style={{ height: '100%', width: '100%', background: '#0A1218' }} zoomControl={false}>
             <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-              attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             {HABS.map(hab => (
               <CircleMarker
