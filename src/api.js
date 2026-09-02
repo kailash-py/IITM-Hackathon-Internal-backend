@@ -104,9 +104,13 @@ export function useDashboard() {
     const source = new EventSource(`${BASE}/api/stream`)
     source.addEventListener('update', () => refresh())
     const timer = setInterval(refresh, 45000)
+    const keepAliveTimer = setInterval(() => {
+      api.health().catch(() => {})
+    }, 8 * 60 * 1000)
     return () => {
       source.close()
       clearInterval(timer)
+      clearInterval(keepAliveTimer)
     }
   }, [refresh])
 

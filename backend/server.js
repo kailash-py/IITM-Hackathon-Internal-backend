@@ -1006,4 +1006,19 @@ app.listen(PORT, () => {
     .catch((err) => {
       console.error("[LIVE] Open-Meteo apply failed, keeping dataset features:", err.message);
     });
+
+  // Automatic Keep-Alive Self-Ping every 10 minutes to keep Render backend 24/7 awake
+  const keepAliveUrl = process.env.RENDER_EXTERNAL_URL || "https://hazard-system-k0i1.onrender.com";
+  setInterval(() => {
+    try {
+      const client = keepAliveUrl.startsWith("https") ? require("https") : require("http");
+      client.get(`${keepAliveUrl}/health`, (r) => {
+        console.log(`[KEEP-ALIVE] Self-ping to ${keepAliveUrl}/health returned ${r.statusCode}`);
+      }).on("error", (e) => {
+        console.log("[KEEP-ALIVE] Self-ping error:", e.message);
+      });
+    } catch (e) {
+      /* ignore */
+    }
+  }, 10 * 60 * 1000);
 });
