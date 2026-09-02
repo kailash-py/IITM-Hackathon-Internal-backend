@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { api, useDashboard } from './api.js'
 import { band, bandColor, priColor } from './risk.js'
 
@@ -177,7 +177,7 @@ export default function App() {
   if (!session) {
     return (
       <>
-        <div className="demo-bar"><b>Demo / simulated data</b> · prototype only · not connected to NDMA, IMD, GSI or any government system</div>
+
         <div className="login-screen">
           <div className="pitch">
             <svg className="bgmap" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice">
@@ -246,7 +246,6 @@ export default function App() {
 
   return (
     <>
-      <div className="demo-bar"><b>Demo / simulated data</b> · prototype only · not connected to NDMA, IMD, GSI or any government system</div>
       <div className="app-root">
         <div className="shell">
           <aside className={`rail ${railOpen ? 'open' : ''}`} onClick={e => { if (e.target === e.currentTarget) setRailOpen(false) }}>
