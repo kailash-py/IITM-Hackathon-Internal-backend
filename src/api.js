@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const BASE = import.meta.env.VITE_API_URL || ''
+const rawBase = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '')
+const BASE = rawBase
 
 async function request(path, options = {}) {
-  const res = await fetch(`${BASE}${path}`, {
+  const cleanPath = path.startsWith('/') ? path : `/${path}`
+  const res = await fetch(`${BASE}${cleanPath}`, {
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
     ...options,
   })
